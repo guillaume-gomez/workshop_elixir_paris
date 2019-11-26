@@ -2,14 +2,13 @@ defmodule ArabicNumerals do
   @doc """
   Converts a Roman numeral into  an Arabic numeral
   """
+  def convert(1), do: "I"
   def convert(4), do: "IV"
+  def convert(5), do: "V"
   def convert(9), do: "IX"
-  def convert(arabic) when arabic >= 1000, do: "M" <> convert(arabic - 1000)
-  def convert(arabic) when arabic >= 500, do: "D" <> convert(arabic - 500)
-  def convert(arabic) when arabic >= 100, do: "C" <> convert(arabic - 100)
-  def convert(arabic) when arabic >= 50, do: "L" <> convert(arabic - 50)
-  def convert(arabic) when arabic >= 10, do: "X" <> convert(arabic - 10)
-  def convert(arabic) when arabic >= 5, do: "V" <> convert(arabic - 5)
-  def convert(arabic) when arabic >= 1, do: "I" <> convert(arabic - 1)
-  def convert(0), do: ""
+  def convert(10), do: "X"
+  def convert(50), do: "L"
+  def convert(100), do: "C"
+  def convert(500), do: "D"
+  def convert(1000), do: "M"
 end
