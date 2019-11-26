@@ -4,11 +4,15 @@ defmodule FindNumberWeb.FindNumberLive do
   def render(assigns) do
     ~L"""
     <h1>Find Number</h1>
-    <p> <%= @message %> </p>
-    <p> <%= @nb_attempts %>  </p>
+    <p> Nb attempts : <%= @nb_attempts %> </p>
     <form phx-submit="save">
-        <input type="text" name="attempt"></input>
-        <button type=submit">valider</button>
+        <%= if @nb_attempts <= 0 do %>
+            <h2>Tu as perdu</h2>
+        <% else %>
+            <p> <%= @message %> </p>
+            <input type="number" name="attempt"></input>
+            <button type=submit">valider</button>
+        <% end %>
     </form>
     """
   end
