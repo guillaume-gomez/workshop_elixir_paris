@@ -11,4 +11,8 @@ defmodule ArabicNumerals do
   def convert(100), do: "C"
   def convert(500), do: "D"
   def convert(1000), do: "M"
+
+  def convert(number) do
+      
+  end
 end

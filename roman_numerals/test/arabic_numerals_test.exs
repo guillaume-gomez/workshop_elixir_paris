@@ -50,6 +50,10 @@ defmodule ArabicNumeralsTest do
   #   assert ArabicNumerals.convert(7) == "VII"
   # end
 
+  # test "converts 8" do
+  #   assert ArabicNumerals.convert(8) == "VIII"
+  # end
+
   # test "converts 18" do
   #   assert ArabicNumerals.convert(18) == "XVIII"
   # end
