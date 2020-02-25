@@ -3,24 +3,33 @@ defmodule Polymer do
   Step 1
   """
   def combination_after_reactions(str) do
-    combine(String.first(str), String.last(str))
+    [a, b] = String.to_char_list(str)
+    combine(a, b)
   end
 
-
-  def combine(a, a)do
-    a <> a
+  def combine(a, a) do
+    List.to_string([a, a])
   end
 
-  def combine(a, b) do
-    cond do
-      String.upcase(a) == String.upcase(b) ->
-        ""
-      true ->
-        a <> b
-    end
+  def combine(a, b) when a == b + 32 do
+    ""
   end
 
+  def combine(a, b) when a == b - 32 do
+    ""
+  end
 
+  def combine(a,b) do
+    List.to_string([a, b])
+  end
+
+  def iterate([a |[ b | tail] ] ) do
+     combine(a, b) <> iterate([b, tail])
+  end
+
+  def iterate([a| b]) do
+    ""
+  end
 
   @doc """
   Step 2

@@ -14,7 +14,6 @@ defmodule PolymerTest do
     assert Polymer.combination_after_reactions("aA") == ""
   end
 
-  @tag :skip
   test "the order of the polymer does not matter for the reaction" do
     assert Polymer.combination_after_reactions("Aa") == ""
   end
