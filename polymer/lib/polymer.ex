@@ -28,7 +28,7 @@ defmodule Polymer do
     combine(a, b) <> iterate([b, tail])
   end
 
-  def iterate([a|b]) do
+  def iterate([_a|_b]) do
     ""
   end
 
@@ -40,7 +40,7 @@ defmodule Polymer do
   @doc """
   Step 2
   """
-  def combination_after_optimization_and_reactions(combination) do
+  def combination_after_optimization_and_reactions(_combination) do
   end
 end
 
