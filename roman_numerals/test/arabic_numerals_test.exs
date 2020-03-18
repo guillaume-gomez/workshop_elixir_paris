@@ -38,27 +38,27 @@ defmodule ArabicNumeralsTest do
     assert ArabicNumerals.convert(1000) == "M"
   end
 
-  # test "converts 2" do
-  #   assert ArabicNumerals.convert(2) == "II"
-  # end
+  test "converts 2" do
+    assert ArabicNumerals.convert(2) == "II"
+  end
 
-  # test "converts 3" do
-  #   assert ArabicNumerals.convert(3) == "III"
-  # end
+  test "converts 3" do
+    assert ArabicNumerals.convert(3) == "III"
+  end
 
-  # test "converts 7" do
-  #   assert ArabicNumerals.convert(7) == "VII"
-  # end
+  test "converts 7" do
+    assert ArabicNumerals.convert(7) == "VII"
+  end
 
-  # test "converts 8" do
-  #   assert ArabicNumerals.convert(8) == "VIII"
-  # end
+  test "converts 8" do
+    assert ArabicNumerals.convert(8) == "VIII"
+  end
 
-  # test "converts 18" do
-  #   assert ArabicNumerals.convert(18) == "XVIII"
-  # end
+  test "converts 18" do
+    assert ArabicNumerals.convert(18) == "XVIII"
+  end
 
-  # test "converts 4827" do
-  #   assert ArabicNumerals.convert(4827) == "MMMMDCCCXXVII"
-  # end
+  test "converts 4827" do
+    assert ArabicNumerals.convert(4827) == "MMMMDCCCXXVII"
+  end
 end
