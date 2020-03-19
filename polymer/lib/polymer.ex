@@ -3,8 +3,9 @@ defmodule Polymer do
   Step 1
   """
   def combination_after_reactions(str) do
-    [a, b] = String.to_char_list(str)
-    combine(a, b)
+    charlist = String.to_charlist(str)
+    IO.puts charlist
+    iterate(charlist)
   end
 
   def combine(a, a) do
@@ -23,13 +24,20 @@ defmodule Polymer do
     List.to_string([a, b])
   end
 
+  # todo add recursion to make chain reactions
   def iterate([a |[ b | tail] ] ) do
-    IO.puts [ b | tail]
-    combine(a, b) <> iterate([b, tail])
+    IO.puts [b | tail]
+    IO.puts combine(a, b)
+    IO.puts "============"
+    combine(a, b) <> iterate([b|tail])
   end
 
-  def iterate([_a|_b]) do
+  def iterate([_a,_b]) do
     ""
+  end
+
+  def iterate([a]) do
+    List.to_string([a])
   end
 
   def iterate([]) do
