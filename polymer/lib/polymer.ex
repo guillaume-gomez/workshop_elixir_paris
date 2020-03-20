@@ -4,7 +4,6 @@ defmodule Polymer do
   """
   def combination_after_reactions(str) do
     charlist = String.to_charlist(str)
-    IO.puts charlist
     iterate(charlist)
   end
 
@@ -26,18 +25,14 @@ defmodule Polymer do
 
   # todo add recursion to make chain reactions
   def iterate([a |[ b | tail] ] ) do
-    IO.puts [b | tail]
-    IO.puts combine(a, b)
-    IO.puts "============"
-    combine(a, b) <> iterate([b|tail])
-  end
-
-  def iterate([_a,_b]) do
-    ""
+    case combine(a,b) do
+      "" -> iterate(tail)
+      _  -> <<a>> <> iterate([b | tail])
+    end
   end
 
   def iterate([a]) do
-    List.to_string([a])
+    <<a>>
   end
 
   def iterate([]) do
