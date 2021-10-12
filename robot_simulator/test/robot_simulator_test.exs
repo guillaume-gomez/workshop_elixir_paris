@@ -8,87 +8,87 @@ defmodule RobotSimulatorTest do
 
   describe "parsing file" do
     test "should read the basic example" do
-      assert RobotSimulator.read_input("test/example.txt") == %{ position: [0, 0], orientation: :north, instructions: [:move, :report] }
+      assert RobotSimulator.read_input("test/example.txt") == %{ position: [0, 0, :north], instructions: [:move, :report] }
     end
     
     test "should read the second example" do
-      assert RobotSimulator.read_input("test/example_b.txt") == %{ position: [0, 0], orientation: :north, instructions: [:left, :report] }
+      assert RobotSimulator.read_input("test/example_b.txt") == %{ position: [0, 0, :north], instructions: [:left, :report] }
     end
 
     test "should read the third example" do
-      assert RobotSimulator.read_input("test/example_c.txt") == %{ position: [1, 2], orientation: :east, instructions: [:move, :move, :left, :move, :report] }
+      assert RobotSimulator.read_input("test/example_c.txt") == %{ position: [1, 2, :east], instructions: [:move, :move, :left, :move, :report] }
     end
   end
 
   describe "move robot" do
     test "should rotate robot to the left when face north" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :north, instructions: [:left] }) == %{position: [0, 0], orientation: :west, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :north], instructions: [:left] }) == %{position: [0, 0, :west], instructions: [] }
     end
 
     test "should rotate robot to the right when face north" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :north, instructions: [:right] }) == %{position: [0, 0], orientation: :east, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :north], instructions: [:right] }) == %{position: [0, 0, :east], instructions: [] }
     end
 
     test "should rotate robot to the left when face west" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :west, instructions: [:left] }) == %{position: [0, 0], orientation: :south, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :west], instructions: [:left] }) == %{position: [0, 0, :south], instructions: [] }
     end
 
     test "should rotate robot to the right when face west" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :west, instructions: [:right] }) == %{position: [0, 0], orientation: :north, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :west], instructions: [:right] }) == %{position: [0, 0, :north], instructions: [] }
     end
 
     test "should rotate robot to the left when face east" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :east, instructions: [:left] }) == %{position: [0, 0], orientation: :north, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :east], instructions: [:left] }) == %{position: [0, 0, :north], instructions: [] }
     end
 
     test "should rotate robot to the right when face east" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :east, instructions: [:right] }) == %{position: [0, 0], orientation: :south, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :east], instructions: [:right] }) == %{position: [0, 0, :south], instructions: [] }
     end
 
     test "should rotate robot to the left when face south" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :south, instructions: [:left] }) == %{position: [0, 0], orientation: :east, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :south], instructions: [:left] }) == %{position: [0, 0, :east], instructions: [] }
     end
 
     test "should rotate robot to the right when face south" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :south, instructions: [:right] }) == %{position: [0, 0], orientation: :west, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :south], instructions: [:right] }) == %{position: [0, 0, :west], instructions: [] }
     end
 
     test "should move forward robot when face south" do
-      assert RobotSimulator.execute_instruction(%{position: [1, 1], orientation: :south, instructions: [:move] }) == %{position: [1, 0], orientation: :south, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [1, 1, :south], instructions: [:move] }) == %{position: [1, 0, :south], instructions: [] }
     end
 
     test "should NOT move forward robot when face south" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :south, instructions: [:move] }) == %{position: [0, 0], orientation: :south, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :south], instructions: [:move] }) == %{position: [0, 0, :south], instructions: [] }
     end
 
     test "should move forward robot when face north" do
-      assert RobotSimulator.execute_instruction(%{position: [1, 1], orientation: :north, instructions: [:move] }) == %{position: [1, 2], orientation: :north, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [1, 1, :north], instructions: [:move] }) == %{position: [1, 2, :north], instructions: [] }
     end
 
     test "should NOT move forward robot when face north" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 4], orientation: :north, instructions: [:move] }) == %{position: [0, 4], orientation: :north, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 4, :north], instructions: [:move] }) == %{position: [0, 4, :north], instructions: [] }
     end
 
     test "should move forward robot when face west" do
-      assert RobotSimulator.execute_instruction(%{position: [1, 1], orientation: :west, instructions: [:move] }) == %{position: [0, 1], orientation: :west, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [1, 1, :west], instructions: [:move] }) == %{position: [0, 1, :west], instructions: [] }
     end
 
     test "should NOT move forward robot when face west" do
-      assert RobotSimulator.execute_instruction(%{position: [0, 0], orientation: :west, instructions: [:move] }) == %{position: [0, 0], orientation: :west, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [0, 0, :west], instructions: [:move] }) == %{position: [0, 0, :west], instructions: [] }
     end
 
     test "should move forward robot when face east" do
-      assert RobotSimulator.execute_instruction(%{position: [1, 1], orientation: :east, instructions: [:move] }) == %{position: [2, 1], orientation: :east, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [1, 1, :east], instructions: [:move] }) == %{position: [2, 1, :east], instructions: [] }
     end
 
     test "should NOT move forward robot when face east" do
-      assert RobotSimulator.execute_instruction(%{position: [4, 0], orientation: :east, instructions: [:move] }) == %{position: [4, 0], orientation: :east, instructions: [] }
+      assert RobotSimulator.execute_instruction(%{position: [4, 0, :east], instructions: [:move] }) == %{position: [4, 0, :east], instructions: [] }
     end
   end
 
   describe "display report" do
     test "should display report" do
-      assert RobotSimulator.execute_instruction(%{position: [2, 3], orientation: :east, instructions: [:report] }) == [2,3, :east]
+      assert RobotSimulator.execute_instruction(%{position: [2, 3, :east], instructions: [:report] }) == [2,3, :east]
     end
   end
 

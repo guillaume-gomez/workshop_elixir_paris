@@ -25,8 +25,7 @@ defmodule RobotSimulator do
   defp parse_string(["PLACE " <> args | instructions]) do
     [x, y, orientation] = String.split(args, ",")
     %{
-      position: [String.to_integer(x), String.to_integer(y)],
-      orientation: convert_to_atom(orientation),
+      position: [String.to_integer(x), String.to_integer(y), convert_to_atom(orientation)],
       instructions: parse_instructions(instructions)
     }
   end
@@ -51,8 +50,8 @@ defmodule RobotSimulator do
   defp instruction("RIGHT"), do: :right
 
 
-  def execute_instructions(%{position: position, orientation: orientation, instructions: [last_command | []] }) do
-    execute_instruction(%{position: position, orientation: orientation, instructions: [last_command] })
+  def execute_instructions(%{position: position, instructions: [last_command | []] }) do
+    execute_instruction(%{position: position, instructions: [last_command] })
   end
 
   def execute_instructions(data) do
@@ -61,83 +60,83 @@ defmodule RobotSimulator do
   end
 
   # north
-  def execute_instruction(%{position: position, orientation: :north, instructions: [:left | commands] }) do
-    %{position: position, orientation: :west, instructions: commands }
+  def execute_instruction(%{position: [x, y, :north], instructions: [:left | commands] }) do
+    %{position: [x, y, :west], instructions: commands }
   end
 
-  def execute_instruction(%{position: position, orientation: :north, instructions: [:right | commands] }) do
-    %{position: position, orientation: :east, instructions: commands }
+  def execute_instruction(%{position: [x, y, :north], instructions: [:right | commands] }) do
+    %{position: [x, y, :east], instructions: commands }
   end
   # west
-  def execute_instruction(%{position: position, orientation: :west, instructions: [:left | commands] }) do
-    %{position: position, orientation: :south, instructions: commands }
+  def execute_instruction(%{position: [x, y, :west], instructions: [:left | commands] }) do
+    %{position: [x,y, :south], instructions: commands }
   end
 
-  def execute_instruction(%{position: position, orientation: :west, instructions: [:right | commands] }) do
-    %{position: position, orientation: :north, instructions: commands }
+  def execute_instruction(%{position: [x, y, :west], instructions: [:right | commands] }) do
+    %{position: [x, y, :north], instructions: commands }
   end
   # south
-  def execute_instruction(%{position: position, orientation: :south, instructions: [:left | commands] }) do
-    %{position: position, orientation: :east, instructions: commands }
+  def execute_instruction(%{position: [x, y, :south], instructions: [:left | commands] }) do
+    %{position: [x, y, :east], instructions: commands }
   end
 
-  def execute_instruction(%{position: position, orientation: :south, instructions: [:right | commands] }) do
-    %{position: position, orientation: :west, instructions: commands }
+  def execute_instruction(%{position: [x, y, :south], instructions: [:right | commands] }) do
+    %{position: [x, y, :west], instructions: commands }
   end
 
   # east
-  def execute_instruction(%{position: position, orientation: :east, instructions: [:left | commands] }) do
-    %{position: position, orientation: :north, instructions: commands }
+  def execute_instruction(%{position: [x, y, :east], instructions: [:left | commands] }) do
+    %{position: [x, y, :north], instructions: commands }
   end
 
-  def execute_instruction(%{position: position, orientation: :east, instructions: [:right | commands] }) do
-    %{position: position, orientation: :south, instructions: commands }
+  def execute_instruction(%{position: [x, y, :east], instructions: [:right | commands] }) do
+    %{position: [x, y, :south], instructions: commands }
   end
 
   # move north
-  def execute_instruction(%{position: [x, 4], orientation: :north, instructions: [:move | commands] }) do
-    %{position: [x, 4], orientation: :north, instructions: commands }
+  def execute_instruction(%{position: [x, 4, :north], instructions: [:move | commands] }) do
+    %{position: [x, 4, :north], instructions: commands }
   end
   
-  def execute_instruction(%{position: [x, y], orientation: :north, instructions: [:move | commands] }) do
-    %{position: [x, y + 1], orientation: :north, instructions: commands }
+  def execute_instruction(%{position: [x, y, :north], instructions: [:move | commands] }) do
+    %{position: [x, y + 1, :north], instructions: commands }
   end
 
   # move south
-  def execute_instruction(%{position: [x, 0], orientation: :south, instructions: [:move | commands] }) do
-    %{position: [x, 0], orientation: :south, instructions: commands }
+  def execute_instruction(%{position: [x, 0, :south], instructions: [:move | commands] }) do
+    %{position: [x, 0,:south], instructions: commands }
   end
 
-  def execute_instruction(%{position: [x, y], orientation: :south, instructions: [:move | commands] }) do
-    %{position: [x, y - 1], orientation: :south, instructions: commands }
+  def execute_instruction(%{position: [x, y, :south], instructions: [:move | commands] }) do
+    %{position: [x, y - 1, :south], instructions: commands }
   end
 
   # move west
-  def execute_instruction(%{position: [0, y], orientation: :west, instructions: [:move | commands] }) do
-    %{position: [0, y], orientation: :west, instructions: commands }
+  def execute_instruction(%{position: [0, y, :west], instructions: [:move | commands] }) do
+    %{position: [0, y, :west], instructions: commands }
   end
 
-  def execute_instruction(%{position: [x, y], orientation: :west, instructions: [:move | commands] }) do
-    %{position: [x - 1, y], orientation: :west, instructions: commands }
+  def execute_instruction(%{position: [x, y, :west], instructions: [:move | commands] }) do
+    %{position: [x - 1, y, :west], instructions: commands }
   end
 
   # move east
-  def execute_instruction(%{position: [4, y], orientation: :east, instructions: [:move | commands] }) do
-    %{position: [4, y], orientation: :east, instructions: commands }
+  def execute_instruction(%{position: [4, y, :east], instructions: [:move | commands] }) do
+    %{position: [4, y, :east], instructions: commands }
   end
 
-  def execute_instruction(%{position: [x, y], orientation: :east, instructions: [:move | commands] }) do
-    %{position: [x + 1, y], orientation: :east, instructions: commands }
+  def execute_instruction(%{position: [x, y, :east], instructions: [:move | commands] }) do
+    %{position: [x + 1, y, :east], instructions: commands }
   end
 
   # report
-  def execute_instruction(%{position: [x, y], orientation: orientation, instructions: [:report | commands] }) do
-    [x, y, orientation]
+  def execute_instruction(%{position: position, instructions: [:report | commands] }) do
+    position
   end
 
   # error clause
-  def execute_instruction(%{position: position, orientation: orientation, instructions: [instruction | commands] }) do
-    %{position: position, orientation: :orientation, instructions: commands }
+  def execute_instruction(%{position: position, instructions: [instruction | commands] }) do
+    %{position: position, instructions: commands }
   end
 
 end
