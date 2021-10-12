@@ -31,8 +31,13 @@ defmodule RobotSimulator do
     }
   end
 
-  def parse_instructions(instructions) do
+  defp parse_instructions(instructions) do
     Enum.map(instructions, fn x -> instruction(x) end)
+  end
+
+  def run_robot(path) do
+    read_input(path)
+    |> execute_instructions
   end
 
   defp convert_to_atom("NORTH"), do: :north
@@ -45,8 +50,14 @@ defmodule RobotSimulator do
   defp instruction("LEFT"), do: :left
   defp instruction("RIGHT"), do: :right
 
-  def execute_instructions(instructions) do
-    
+
+  def execute_instructions(%{position: position, orientation: orientation, instructions: [last_command | []] }) do
+    execute_instruction(%{position: position, orientation: orientation, instructions: [last_command] })
+  end
+
+  def execute_instructions(data) do
+    result_intruction = execute_instruction(data)
+    execute_instructions(result_intruction)
   end
 
   # north
@@ -103,8 +114,13 @@ defmodule RobotSimulator do
     %{position: [x + 1, y], orientation: :east, instructions: commands }
   end
 
+  # report
+  def execute_instruction(%{position: [x, y], orientation: orientation, instructions: [:report | commands] }) do
+    [x, y, orientation]
+  end
+
   # error clause
-  def execute_instruction(%{position: position, orientation: orientation, instructions: [:move | commands] }) do
+  def execute_instruction(%{position: position, orientation: orientation, instructions: [instruction | commands] }) do
     %{position: position, orientation: :orientation, instructions: commands }
   end
 
