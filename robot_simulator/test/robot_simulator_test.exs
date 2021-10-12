@@ -18,6 +18,10 @@ defmodule RobotSimulatorTest do
     test "should read the third example" do
       assert RobotSimulator.read_input("test/example_c.txt") == %{ position: [1, 2, :east], instructions: [:move, :move, :left, :move, :report] }
     end
+
+    test "should avoid invalid PLACE instruction" do
+      assert RobotSimulator.read_input("test/example_e.txt") == %{ position: [1, 2, :south], instructions: [:move, :move, :move, :report] }
+    end
   end
 
   describe "move robot" do
@@ -103,6 +107,10 @@ defmodule RobotSimulatorTest do
 
     test "should run third example" do
       assert RobotSimulator.run_robot("test/example_c.txt") == [3,3,:north]
+    end
+
+    test "should run fouth example" do
+      assert RobotSimulator.run_robot("test/example_e.txt") == [1,0,:south]
     end
   end
 end

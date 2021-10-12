@@ -22,13 +22,29 @@ defmodule RobotSimulator do
     |> parse_string()
   end
 
+
   defp parse_string(["PLACE " <> args | instructions]) do
     [x, y, orientation] = String.split(args, ",")
-    %{
-      position: [String.to_integer(x), String.to_integer(y), convert_to_atom(orientation)],
-      instructions: parse_instructions(instructions)
-    }
+    [x_int, y_int] = [String.to_integer(x), String.to_integer(y)]
+    case check_valid_place(x_int, y_int) do
+      false ->
+        parse_string(instructions)
+      _ ->
+        %{
+          position: [x_int, y_int, convert_to_atom(orientation)],
+          instructions: parse_instructions(instructions)
+        }
+    end
   end
+
+  defp parse_string([_no_place_instruction | instructions]) do
+    parse_string(instructions)
+  end
+
+  def check_valid_place(x, _y) when x < 0 or x > 4, do: false
+  def check_valid_place(_x, y) when y < 0 or y > 4, do: false
+  def check_valid_place(_x, _y), do: true
+
 
   defp parse_instructions(instructions) do
     Enum.map(instructions, fn x -> instruction(x) end)
@@ -130,12 +146,12 @@ defmodule RobotSimulator do
   end
 
   # report
-  def execute_instruction(%{position: position, instructions: [:report | commands] }) do
+  def execute_instruction(%{position: position, instructions: [:report | _commands] }) do
     position
   end
 
   # error clause
-  def execute_instruction(%{position: position, instructions: [instruction | commands] }) do
+  def execute_instruction(%{position: position, instructions: [_instruction | commands] }) do
     %{position: position, instructions: commands }
   end
 
