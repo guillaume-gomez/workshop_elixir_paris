@@ -95,21 +95,37 @@ defmodule RobotSimulator do
   end
 
   # move north
+  def execute_instruction(%{position: [x, 4], orientation: :north, instructions: [:move | commands] }) do
+    %{position: [x, 4], orientation: :north, instructions: commands }
+  end
+  
   def execute_instruction(%{position: [x, y], orientation: :north, instructions: [:move | commands] }) do
     %{position: [x, y + 1], orientation: :north, instructions: commands }
   end
 
   # move south
+  def execute_instruction(%{position: [x, 0], orientation: :south, instructions: [:move | commands] }) do
+    %{position: [x, 0], orientation: :south, instructions: commands }
+  end
+
   def execute_instruction(%{position: [x, y], orientation: :south, instructions: [:move | commands] }) do
     %{position: [x, y - 1], orientation: :south, instructions: commands }
   end
 
   # move west
+  def execute_instruction(%{position: [0, y], orientation: :west, instructions: [:move | commands] }) do
+    %{position: [0, y], orientation: :west, instructions: commands }
+  end
+
   def execute_instruction(%{position: [x, y], orientation: :west, instructions: [:move | commands] }) do
     %{position: [x - 1, y], orientation: :west, instructions: commands }
   end
 
   # move east
+  def execute_instruction(%{position: [4, y], orientation: :east, instructions: [:move | commands] }) do
+    %{position: [4, y], orientation: :east, instructions: commands }
+  end
+
   def execute_instruction(%{position: [x, y], orientation: :east, instructions: [:move | commands] }) do
     %{position: [x + 1, y], orientation: :east, instructions: commands }
   end
