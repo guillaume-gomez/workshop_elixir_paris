@@ -52,7 +52,7 @@ defmodule RobotSimulator do
 
   def run_robot(path) do
     read_input(path)
-    |> execute_instructions
+    |> execute_instructions([])
   end
 
   defp convert_to_atom("NORTH"), do: :north
@@ -65,15 +65,21 @@ defmodule RobotSimulator do
   defp instruction("LEFT"), do: :left
   defp instruction("RIGHT"), do: :right
 
+  def execute_instructions(%{position: position, instructions: [ :report| rest] }, output) do
+    result_intruction = execute_instruction(%{position: position, instructions: [ :report| rest] })
 
-  def execute_instructions(%{position: position, instructions: [last_command | []] }) do
-    execute_instruction(%{position: position, instructions: [last_command] })
+    execute_instructions(result_intruction, [position | output])
   end
 
-  def execute_instructions(data) do
+  def execute_instructions(%{position: _position, instructions: [] }, output) do
+    Enum.reverse(output)
+  end
+
+  def execute_instructions(data, output) do
     result_intruction = execute_instruction(data)
-    execute_instructions(result_intruction)
+    execute_instructions(result_intruction, output)
   end
+
 
   # north
   def execute_instruction(%{position: [x, y, :north], instructions: [:left | commands] }) do
@@ -145,12 +151,7 @@ defmodule RobotSimulator do
     %{position: [x + 1, y, :east], instructions: commands }
   end
 
-  # report
-  def execute_instruction(%{position: position, instructions: [:report | _commands] }) do
-    position
-  end
-
-  # error clause
+  # report and error clause
   def execute_instruction(%{position: position, instructions: [_instruction | commands] }) do
     %{position: position, instructions: commands }
   end

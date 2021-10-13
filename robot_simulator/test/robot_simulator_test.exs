@@ -92,25 +92,29 @@ defmodule RobotSimulatorTest do
 
   describe "display report" do
     test "should display report" do
-      assert RobotSimulator.execute_instruction(%{position: [2, 3, :east], instructions: [:report] }) == [2,3, :east]
+      assert RobotSimulator.execute_instruction(%{position: [2, 3, :east], instructions: [:report] }) == %{instructions: [], position: [2, 3, :east]}
     end
   end
 
   describe "move the robot and display its position" do
     test "should run first example" do
-      assert RobotSimulator.run_robot("test/example.txt") == [0,1,:north]
+      assert RobotSimulator.run_robot("test/example.txt") == [[0,1,:north]]
     end
 
     test "should run second example" do
-      assert RobotSimulator.run_robot("test/example_b.txt") == [0,0,:west]
+      assert RobotSimulator.run_robot("test/example_b.txt") == [[0,0,:west]]
     end
 
     test "should run third example" do
-      assert RobotSimulator.run_robot("test/example_c.txt") == [3,3,:north]
+      assert RobotSimulator.run_robot("test/example_c.txt") == [[3,3,:north]]
     end
 
     test "should run fouth example" do
-      assert RobotSimulator.run_robot("test/example_e.txt") == [1,0,:south]
+      assert RobotSimulator.run_robot("test/example_d.txt") == [[0,0,:north], [0,1,:north]]
+    end
+
+    test "should run fifth example" do
+      assert RobotSimulator.run_robot("test/example_e.txt") == [[1,0,:south]]
     end
   end
 end
